@@ -3,17 +3,26 @@
     <!-- <q-btn label="get city" @click="showCities" /> -->
     <!-- <p>{{loadTenCities}}</p> -->
     <div class="column items-center">
-      <q-input class="q-my-md" v-model="searchCity" outlined placeholder="Enter a city" style="width:500px;"/>
+      <q-input class="q-my-md" v-model="searchCity" color="black" placeholder="Search" style="width:500px;">
+        <template v-slot:prepend>
+          <q-icon name="location_on" />
+        </template>
+        <template v-slot:append>
+          <q-icon name="search" />
+        </template>
+      </q-input>
     </div>
     <div class="column items-center" v-for="city in loadTenCities" :key="city.City">
       <div class="col">
         <q-card class="q-mb-sm text-center cursor-pointer" style="width:500px">
-          <q-item clickable>
-            <q-item-section>
-              <q-item-label>{{city.City}}</q-item-label>
-              <q-item-label caption lines="2">{{city.State}}</q-item-label>
-            </q-item-section>
-          </q-item>
+          <router-link class="text-black" :to="`/weather/city=${city.City}&state=${city.State}`" target="_blank" style="text-decoration:none;">
+            <q-item clickable>
+              <q-item-section>
+                <q-item-label>{{city.City}}</q-item-label>
+                <q-item-label caption lines="2">{{city.State}}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </router-link>
         </q-card>
       </div>
     </div>
@@ -28,6 +37,7 @@
         :min="currentPage" 
         :max="Math.ceil(totalCities/totalCitiesPerPage)"
         :input="true"
+        color="black"
         input-class="text-black text-weight-bold"
       >
       </q-pagination>
@@ -90,6 +100,7 @@ export default {
     ...mapActions('cities', ['loadCities'])
   },
   created() {
+    this.$q.loading.show()
     this.$axios.get('https://indian-cities-api-nocbegfhqg.now.sh/cities')
     .then(cities => {
       this.loadCities({
@@ -100,8 +111,15 @@ export default {
       })
       .then(() => {
         this.loadTenCities
+        this.$q.loading.hide()
       })
     })
   },
 }
 </script>
+
+<style lang="scss" scoped>
+  .q-page {
+    background: linear-gradient(to top, #6190e8, #a7bfe8);
+  }
+</style>

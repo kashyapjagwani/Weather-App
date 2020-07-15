@@ -1,9 +1,5 @@
 const state = {
-  cities: [
-    {
-      name: 'lol'
-    }
-  ]
+  cities: []
 }
 
 const mutations = {
