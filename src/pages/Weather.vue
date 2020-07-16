@@ -65,6 +65,9 @@ export default {
       this.weatherData = this.getWeather
       this.$q.loading.hide()
     })
+    .catch(error => {
+      this.$q.loading.hide()
+    })
   }
 }
 </script>

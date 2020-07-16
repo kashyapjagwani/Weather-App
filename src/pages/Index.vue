@@ -119,7 +119,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .q-page {
-    background: linear-gradient(to top, #6190e8, #a7bfe8);
-  }
+  
 </style>
